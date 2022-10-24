@@ -1,0 +1,10 @@
+= Lecture Notes 22/23 - 4bhitm - SEW
+:icons: font
+:toc: left
+ifndef::imagesdir[:imagesdir: images]
+[plantuml,cld,svg]
+----
+include::cld.puml[]
+----
+
+
