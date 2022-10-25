@@ -179,4 +179,6 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-# End of https://www.toptal.com/developers/gitignore/api/maven
+# End of https://www.toptal.com/developers/gitignore/api/mavendist/
+dist/
+gh-pages/
