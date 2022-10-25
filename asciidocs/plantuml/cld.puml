@@ -1,17 +1,17 @@
 @startuml
 
 class Customer {
-    name: String
-    designInvoices: DesignInvoice[]
-    productInvoices: ProductInvoice[]
+    - name: String
+    - designInvoices: DesignInvoice[]
+    - productInvoices: ProductInvoice[]
 }
 class GardenDesign {
 
-   name: String
-   type : String
-   extras: Product[]
-   buildingTasks: GardnerTask[]
-   invoices: DesignInvoice[]
+  - name: String
+  - type : String
+  - extras: Product[]
+  - buildingTasks: GardnerTask[]
+  - invoices: DesignInvoice[]
 
 
 }
@@ -22,10 +22,10 @@ class Gardner {
 }
 class Product {
 
- type :ProductType
- price :double
- amount :int
- invoices: ProductInvoice[]
+ - type :ProductType
+ - price :double
+ - amount :int
+ - invoices: ProductInvoice[]
 
 }
 
@@ -37,17 +37,21 @@ enum ProductType {
 }
 
 class GardnerTask {
-    gardner: Gardner
-    design: GardenDesign
+    - gardner: Gardner
+    - design: GardenDesign
 }
 class ProductInvoice  {
-    customer: Customer
-    products: Product
-    purchasedProductsAmount: int
+    - customer: Customer
+    - products: Product
+    - purchasedProductsAmount: int
+    - price: double
 }
 class DesignInvoice {
-    customer: Customer
-    design: GardenDesign
+    - customer: Customer
+    - design: GardenDesign
+    - price: double
+    - amount: int
+
 }
 
 Customer "1" -- "*"  DesignInvoice
