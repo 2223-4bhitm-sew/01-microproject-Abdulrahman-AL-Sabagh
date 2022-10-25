@@ -4,7 +4,7 @@
 ifndef::imagesdir[:imagesdir: images]
 [plantuml,cld,svg]
 ----
-include::cld.puml[]
+include::plantuml/cld.puml[]
 ----
 
 
