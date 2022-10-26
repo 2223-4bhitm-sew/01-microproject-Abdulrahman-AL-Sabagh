@@ -2,6 +2,7 @@
 :icons: font
 :toc: left
 ifndef::imagesdir[:imagesdir: images]
+
 [plantuml,cld,svg]
 ----
 include::plantuml/cld.puml[]
