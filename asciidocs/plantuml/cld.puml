@@ -5,11 +5,14 @@ class Customer {
     - designInvoices: DesignInvoice[]
     - invoices: Invoice[]
 }
+
 class Gardner {
     name :String
     tasks GardnerTask[]
+
 }
 class Product {
+
  - type :ProductType
  - price :double
  - amount :int
@@ -18,6 +21,7 @@ class Product {
  - installationTasks: GardnerTask[]
 
 }
+
 
 enum ProductType {
     PLANT
