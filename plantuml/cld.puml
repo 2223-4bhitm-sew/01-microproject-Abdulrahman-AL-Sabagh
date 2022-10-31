@@ -1,0 +1,54 @@
+@startuml
+left to right direction
+class Customer {
+    - name: String
+    - designInvoices: DesignInvoice[]
+    - invoices: Invoice[]
+}
+
+class Gardner {
+    name :String
+    tasks GardnerTask[]
+
+}
+class Product {
+
+ - type :ProductType
+ - price :double
+ - amount :int
+ - invoices: Invoice[]
+ - durationOfTheInstallation: LocalDate
+ - installationRequiresHelp: boolean
+
+}
+
+
+enum ProductType {
+    PLANT
+    TOOL
+    DECORATION
+    GARDENDESIGN
+}
+
+class GardnerTask {
+    - gardner: Gardner
+    - design: GardenDesign
+    - invoice: Invoice
+    - salary: double
+}
+class Invoice  {
+    - customer: Customer
+    - products: Product
+    - purchasedAmountOfProducts: int
+    - tasksPerGardner: GardnerTask[]
+    - totalPrice: double
+
+}
+
+
+Invoice "1" -- "*" GardnerTask
+Gardner "1" -- "*" GardnerTask
+Customer "1" -- "*" Invoice
+Product "1" -- "*" Invoice
+
+@enduml
