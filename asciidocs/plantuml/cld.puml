@@ -5,23 +5,19 @@ class Customer {
     - designInvoices: DesignInvoice[]
     - invoices: Invoice[]
 }
-
 class Gardner {
     name :String
     tasks GardnerTask[]
-
 }
 class Product {
-
  - type :ProductType
  - price :double
  - amount :int
- - invoices: Invoice[]
+ - invoice: Invoice
  - durationOfTheInstallation: LocalDate
- - installationRequiresHelp: boolean
+ - installationTasks: GardnerTask[]
 
 }
-
 
 enum ProductType {
     PLANT
@@ -32,23 +28,23 @@ enum ProductType {
 
 class GardnerTask {
     - gardner: Gardner
-    - design: GardenDesign
+    - product: Product
     - invoice: Invoice
     - salary: double
 }
 class Invoice  {
     - customer: Customer
-    - products: Product
+    - products: Product[]
     - purchasedAmountOfProducts: int
     - tasksPerGardner: GardnerTask[]
     - totalPrice: double
 
 }
 
-
+Product "1" -- "*" GardnerTask
 Invoice "1" -- "*" GardnerTask
 Gardner "1" -- "*" GardnerTask
 Customer "1" -- "*" Invoice
-Product "1" -- "*" Invoice
+Product "*" -- "1" Invoice
 
 @enduml
