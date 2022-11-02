@@ -1,0 +1,17 @@
+@startuml
+
+left to right direction
+
+class Customer
+class Invoice
+class LineItem
+class Product
+class Gardener
+
+
+Customer <-- Invoice
+Invoice <-- LineItem
+LineItem --> Product
+LineItem -left-> Gardener
+
+@enduml
