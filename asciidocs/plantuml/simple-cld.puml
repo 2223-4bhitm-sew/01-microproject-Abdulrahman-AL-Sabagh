@@ -6,6 +6,7 @@ class Customer
 class Invoice
 class LineItem
 class Product
+note bottom: Ein Produkt kann auch \neine Tätigkeit sein\ndie Tasks wären also ein Produkt
 class Gardener
 
 
