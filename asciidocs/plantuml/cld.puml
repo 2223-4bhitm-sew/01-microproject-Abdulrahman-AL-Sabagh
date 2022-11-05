@@ -1,10 +1,6 @@
 @startuml
-<<<<<<< HEAD
-=======
-left to right direction
 class Customer {
     - name: String
-    - designInvoices: DesignInvoice[]
     - invoices: Invoice[]
 }
 
@@ -13,59 +9,19 @@ class Gardener {
     tasks GardenerTask[]
 
 }
-class Product {
-
- - type :ProductType
- - price :double
- - amount :int
- - invoice: Invoice
- - durationOfTheInstallation: LocalDate
- - installationTasks: GardenerTask[]
->>>>>>> f4de65de81145de439dfd198ea80cd903ebb1f1e
 
 
-<<<<<<< HEAD
+
 class Customer  {}
-class Product
+class Product {}
 note left: 2 Arten von Produkten. \n - SofProduct: Dabei wird eine Hilfe von einem Gärtner gebraucht.\n z.B.: bei einem speziellen Design. \n - HardProduct: Dabei wird keine Hilfe  gebraucht. \n z.B.: Ein Kunde kauft sich eine Pflanze
 
-=======
-
-enum ProductType {
-    PLANT
-    TOOL
-    DECORATION
-    GARDENDESIGN
-}
-
-class GardenerTask {
-    - gardener: Gardener
-    - product: Product
-    - invoice: Invoice
-    - salary: double
-}
-class Invoice  {
-    - customer: Customer
-    - products: Product[]
-    - purchasedAmountOfProducts: int
-    - tasksPerGardner: GardenerTask[]
-    - totalPrice: double
->>>>>>> f4de65de81145de439dfd198ea80cd903ebb1f1e
-
-
-<<<<<<< HEAD
-
-class SofProduct extends Product
+class SoftProduct extends Product
 class HardProduct extends Product
 class Invoice
 class Gardener
 
-Gardener "1" -- "*" SofProduct
+Gardener "1" -- "*" SoftProduct
 Invoice "1" -- "*" Product
-=======
-Product "1" -- "*" GardenerTask
-Invoice "1" -- "*" GardenerTask
-Gardener "1" -- "*" GardenerTask
->>>>>>> f4de65de81145de439dfd198ea80cd903ebb1f1e
 Customer "1" -- "*" Invoice
 @enduml
