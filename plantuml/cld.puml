@@ -1,0 +1,27 @@
+@startuml
+class Customer {
+    - name: String
+    - invoices: Invoice[]
+}
+
+class Gardener {
+    name :String
+    tasks GardenerTask[]
+
+}
+
+
+
+class Customer  {}
+class Product {}
+note left: 2 Arten von Produkten. \n - SofProduct: Dabei wird eine Hilfe von einem Gärtner gebraucht.\n z.B.: bei einem speziellen Design. \n - HardProduct: Dabei wird keine Hilfe  gebraucht. \n z.B.: Ein Kunde kauft sich eine Pflanze
+
+class SoftProduct extends Product
+class HardProduct extends Product
+class Invoice
+class Gardener
+
+Gardener "1" -- "*" SoftProduct
+Invoice "1" -- "*" Product
+Customer "1" -- "*" Invoice
+@enduml
