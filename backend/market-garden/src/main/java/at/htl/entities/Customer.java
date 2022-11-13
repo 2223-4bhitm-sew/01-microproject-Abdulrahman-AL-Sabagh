@@ -10,9 +10,10 @@ import javax.persistence.Id;
 
 @Entity
 @NamedQuery(name = "Customer.findAll", query = "SELECT  c from  Customer c ")
-public class Customer {
+public class
+Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

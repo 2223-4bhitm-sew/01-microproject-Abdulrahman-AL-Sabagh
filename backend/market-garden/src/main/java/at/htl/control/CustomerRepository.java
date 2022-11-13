@@ -5,7 +5,6 @@ import at.htl.entities.Customer;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -15,31 +14,29 @@ public class CustomerRepository {
     EntityManager entityManager;
 
 
-    public List getAllCustomers() {
-        return entityManager.createNamedQuery("Customer.findAll").getResultList();
+    public List<Customer> getAllCustomers() {
+        List<Customer> customers = entityManager.createNamedQuery("Customer.findAll").getResultList();
+        return customers;
+    }
+
+    public Customer getCustomer(long id) {
+        return entityManager.find(Customer.class, id);
 
     }
 
-    public Customer getCustomer(Customer customer) {
-        return entityManager.find(customer.getClass(), customer);
-    }
 
-    @Transactional
     public Customer save(Customer customer) {
         return entityManager.merge(customer);
     }
 
-    public Customer updateCustomer(Customer customer) {
-        return null; //TODO fix this later
+    public Customer update(Customer customer) {
+        return entityManager.merge(customer);
     }
 
-    @Transactional
-    public Customer deleteCustomer(Customer customer) {
-        if (entityManager.contains(customer)) {
-            entityManager.remove(customer);
-            return customer;
 
-        }
-        return null;
+    public Customer deleteCustomer(long id) {
+        Customer customer = entityManager.find(Customer.class, id);
+        entityManager.remove(customer);
+        return customer;
     }
 }
