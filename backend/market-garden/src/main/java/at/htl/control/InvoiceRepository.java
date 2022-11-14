@@ -16,6 +16,9 @@ public class InvoiceRepository {
 
 
     public Invoice save(Invoice invoice) {
+        if (entityManager.contains(invoice)) {
+            return null;
+        }
         return entityManager.merge(invoice);
     }
 

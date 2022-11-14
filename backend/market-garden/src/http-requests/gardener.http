@@ -13,7 +13,7 @@ Content-Type: application/json
 GET http://localhost:8080/api/gardener
 
 ###
-
+GET http://localhost:8080/api/gardener/1
 ###
 PUT http://localhost:8080/api/gardener
 Content-Type: application/json

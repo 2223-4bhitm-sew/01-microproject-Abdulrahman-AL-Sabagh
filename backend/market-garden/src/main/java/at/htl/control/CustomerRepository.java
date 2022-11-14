@@ -26,6 +26,9 @@ public class CustomerRepository {
 
 
     public Customer save(Customer customer) {
+        if (entityManager.contains(customer)) {
+            return null;
+        }
         return entityManager.merge(customer);
     }
 

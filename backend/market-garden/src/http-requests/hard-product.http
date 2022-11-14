@@ -1,0 +1,24 @@
+POST http://localhost:8080/api/hard-product
+Content-Type: application/json
+
+{
+  "name": "Plant",
+  "price": 22
+}
+###
+GET http://localhost:8080/api/hard-product
+
+
+###
+GET  http://localhost:8080/api/hard-product/1
+###
+PUT  http://localhost:8080/api/hard-product
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "SMALL TREE",
+  "price": 100
+}
+###
+DELETE http://localhost:8080/api/hard-product/1

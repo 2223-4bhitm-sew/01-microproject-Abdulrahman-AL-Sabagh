@@ -1,10 +1,11 @@
 package at.htl.boundary;
 
-import at.htl.control.GardenerRepository;
-import at.htl.entities.Gardener;
+import at.htl.control.HardProductRepository;
+import at.htl.entities.HardProduct;
+import at.htl.entities.Product;
+import org.jboss.resteasy.annotations.jaxrs.HeaderParam;
 
 import javax.inject.Inject;
-import javax.print.attribute.standard.MediaPrintableArea;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -14,34 +15,33 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-@Path("/gardener")
-public class GardenerResource {
+@Path("/hard-product")
+public class HardProductResource {
     @Inject
-    GardenerRepository gardenerRepository;
-
+    HardProductRepository hardProductRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Gardener> getAllGardeners() {
-        return gardenerRepository.getAllGardeners();
+    public List<HardProduct> getAll() {
+        return hardProductRepository.findAll();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Gardener getById(@PathParam("id") long id) {
-        return gardenerRepository.getById(id);
+    public HardProduct getProductById(@PathParam("id") long id) {
+        return hardProductRepository.findOneById(id);
     }
 
     @POST
+    @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response createGardener(Gardener gardener, @Context UriInfo uriInfo) {
-        Gardener createdGardener = gardenerRepository.save(gardener);
+    public Response createHardProduct(HardProduct hardProduct, @Context UriInfo uriInfo) {
+        Product product = hardProductRepository.save(hardProduct);
         URI uri = uriInfo
                 .getAbsolutePathBuilder()
-                .path(createdGardener.getId().toString())
+                .path(product.getId().toString())
                 .build();
         return Response.created(uri).build();
     }
@@ -50,14 +50,13 @@ public class GardenerResource {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateGardener(Gardener gardener, @Context UriInfo uriInfo) {
-        Gardener updatedGardener = gardenerRepository.updateGardener(gardener);
+    public Response deleteHardProduct(HardProduct hardProduct, @Context UriInfo uriInfo) {
+        Product product = hardProductRepository.updateHardProduct(hardProduct);
         URI uri = uriInfo
                 .getAbsolutePathBuilder()
-                .path(updatedGardener.getId().toString())
+                .path(product.getId().toString())
                 .build();
         return Response.created(uri).build();
-
     }
 
     @DELETE
@@ -65,13 +64,14 @@ public class GardenerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response updateGardener(@PathParam("id") long id, @Context UriInfo uriInfo) {
-        Gardener updatedGardener = gardenerRepository.deleteGardener(id);
+    public Response deleteHardProduct(@PathParam("id") long id, @Context UriInfo uriInfo) {
+        Product product = hardProductRepository.deleteHardProduct(id);
         URI uri = uriInfo
                 .getAbsolutePathBuilder()
-                .path(updatedGardener.getId().toString())
+                .path(product.getId().toString())
                 .build();
         return Response.created(uri).build();
-
     }
+
+
 }

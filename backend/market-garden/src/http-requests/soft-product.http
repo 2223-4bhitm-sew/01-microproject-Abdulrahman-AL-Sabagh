@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/soft-product
+Content-Type: application/json
+
+{
+  "name": "Chinese design",
+  "price": 3000
+}
+###
+GET http://localhost:8080/api/soft-product/1
+###
+GET http://localhost:8080/api/soft-product
+
+###
+PUT http://localhost:8080/api/soft-product
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Japanese Design",
+  "price": 10000
+}
+###
+DELETE http://localhost:8080/api/soft-product/1

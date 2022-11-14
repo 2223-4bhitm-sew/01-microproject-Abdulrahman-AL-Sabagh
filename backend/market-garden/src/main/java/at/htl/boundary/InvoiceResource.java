@@ -1,12 +1,10 @@
 package at.htl.boundary;
 
 import at.htl.control.InvoiceRepository;
-import at.htl.entities.Invoice;
 import org.jboss.logging.Logger;
 
-import javax.annotation.PreDestroy;
 import javax.inject.Inject;
-import javax.print.attribute.standard.Media;
+
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -15,6 +13,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
+
+import at.htl.entities.Invoice;
 
 
 @Path("/invoice")

@@ -13,12 +13,18 @@ public class GardenerRepository {
     @Inject
     EntityManager entityManager;
 
+    public Gardener getById(long id) {
+        return entityManager.find(Gardener.class, id);
+    }
 
     public List<Gardener> getAllGardeners() {
         return entityManager.createNamedQuery("Gardener.findAll").getResultList();
     }
 
     public Gardener save(Gardener gardener) {
+        if (entityManager.contains(gardener)) {
+            return null;
+        }
         return entityManager.merge(gardener);
     }
 
