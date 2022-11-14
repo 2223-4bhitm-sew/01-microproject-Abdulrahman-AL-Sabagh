@@ -1,0 +1,9 @@
+= README
+
+NOTE: Beim CLD
+
+- Es gibt Softproduct :
+   Dazu wird die Hilfe von einem Gardener gebraucht. z.B.: ein neues Garden-Design  muss gebaut werden. Dazu braucht man schon eine Hilfe von einem Experten
+    Es können auch mehrere sein, aber ich habe mich nur auf einem beschränkt, damit das Projekt nicht komplexer wird
+
+- Es gibt Hardproduct: Bei diesem Produkt wird keine Hilfe benötigt. Z.B.: Ein Customer kauft sich ein Schaufel
