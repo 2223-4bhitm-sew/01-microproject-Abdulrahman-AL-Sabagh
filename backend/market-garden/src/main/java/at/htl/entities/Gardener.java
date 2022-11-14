@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
+@NamedQuery(name = "Gardener.findAll",query = "SELECT g from Gardener g")
 public class Gardener {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

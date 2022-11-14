@@ -1,0 +1,27 @@
+###
+POST http://localhost:8080/api/gardener
+Content-Type: application/json
+
+{
+  "name": "bob"
+}
+
+###
+
+
+###
+GET http://localhost:8080/api/gardener
+
+###
+
+###
+PUT http://localhost:8080/api/gardener
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "MAX"
+}
+
+###
+DELETE http://localhost:8080/api/gardener/1
