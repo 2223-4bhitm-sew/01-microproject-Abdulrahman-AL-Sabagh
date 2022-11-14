@@ -6,19 +6,30 @@ class Customer {
 
 class Gardener {
     name :String
-    tasks GardenerTask[]
+    buildingTasks: SoftProduct[]
 
 }
 
 
 
-class Customer  {}
-class Product {}
+class Product {
+    - name: String
+    - price: double
+    - inStock : int
+    - invoice: Invoice
+}
 note left: 2 Arten von Produkten. \n - SofProduct: Dabei wird eine Hilfe von einem Gärtner gebraucht.\n z.B.: bei einem speziellen Design. \n - HardProduct: Dabei wird keine Hilfe  gebraucht. \n z.B.: Ein Kunde kauft sich eine Pflanze
 
-class SoftProduct extends Product
+class SoftProduct extends Product {
+    - helper: Gardener
+}
 class HardProduct extends Product
-class Invoice
+class Invoice {
+     - customer: Customer
+     - totalPrice: double
+     - products: Product[]
+
+}
 class Gardener
 
 Gardener "1" -- "*" SoftProduct
