@@ -1,0 +1,43 @@
+###
+POST http://localhost:8080/api/invoice
+Content-Type: application/json
+
+{
+  "totalCost": 22
+}
+
+###
+
+
+###
+GET http://localhost:8080/api/invoice/1
+
+###
+
+
+###
+GET http://localhost:8080/api/invoice
+
+###
+
+
+###
+PUT http://localhost:8080/api/invoice
+Content-Type: application/json
+
+{
+  "id": 1,
+  "totalCost": 33,
+  "customer": null
+}
+
+###
+
+
+
+###
+DELETE  http://localhost:8080/api/invoice/1
+
+
+
+###

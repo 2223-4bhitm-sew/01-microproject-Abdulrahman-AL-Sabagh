@@ -3,6 +3,8 @@ package at.htl.entities;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name = "Invoice.findAll", query = "SELECT  i from  Invoice i ")
+
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,5 +45,14 @@ public class Invoice {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", totalCost=" + totalCost +
+                ", customer=" + customer +
+                '}';
     }
 }
