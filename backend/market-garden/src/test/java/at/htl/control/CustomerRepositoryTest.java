@@ -24,7 +24,7 @@ class CustomerRepositoryTest {
     @Test
     @Transactional
     void createACustomer() {
-        customerRepository.save(new Customer("Bob"));
+        customerRepository.persist(new Customer("Bob"));
         Table table = new Table(dataSource, "Customer");
         assertThat(table).row(0).column("name").value().isEqualTo("Bob");
     }
@@ -33,7 +33,7 @@ class CustomerRepositoryTest {
     void getACustomer() {
 
 
-        Customer customer = customerRepository.getCustomer(1);
+        Customer customer = customerRepository.findById(1L);
         Table table = new Table(dataSource, "Customer");
         output(table).toConsole();
         assertThat(table).row(0).column("name").value()

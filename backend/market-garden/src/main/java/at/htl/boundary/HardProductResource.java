@@ -2,8 +2,7 @@ package at.htl.boundary;
 
 import at.htl.control.HardProductRepository;
 import at.htl.entities.HardProduct;
-import at.htl.entities.Product;
-import org.jboss.resteasy.annotations.jaxrs.HeaderParam;
+import org.hibernate.event.service.spi.EventListenerGroup;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -16,62 +15,46 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/hard-product")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class HardProductResource {
     @Inject
     HardProductRepository hardProductRepository;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<HardProduct> getAll() {
-        return hardProductRepository.findAll();
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public HardProduct getProductById(@PathParam("id") long id) {
-        return hardProductRepository.findOneById(id);
-    }
-
     @POST
     @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response createHardProduct(HardProduct hardProduct, @Context UriInfo uriInfo) {
-        Product product = hardProductRepository.save(hardProduct);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(product.getId().toString())
-                .build();
-        return Response.created(uri).build();
+        hardProductRepository.persist(hardProduct);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(hardProduct.getId().toString()).build();
+        return Response.created(uri).location(uri).build();
     }
 
-    @PUT
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteHardProduct(HardProduct hardProduct, @Context UriInfo uriInfo) {
-        Product product = hardProductRepository.updateHardProduct(hardProduct);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(product.getId().toString())
-                .build();
-        return Response.created(uri).build();
+    @GET
+    @Path("{id}")
+    public HardProduct getHardProduct(@PathParam("id") long id) {
+        return hardProductRepository.findById(id);
     }
+    @GET
+    public List<HardProduct> getAll() {
+        return hardProductRepository.listAll();
+    }
+    @PUT
+    @Path("{id}")
+    @Transactional
+    public Response updateHardProduct(HardProduct hardProduct, @PathParam("id") long id, @Context UriInfo uriInfo) {
+        hardProductRepository.update("name=?1 price=?2 where id=?3", hardProduct.getName(), hardProduct.getPrice(), id);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(Long.valueOf(id).toString()).build();
+        return Response.accepted(uri).location(uri).build();
+    }
+
 
     @DELETE
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Transactional
     public Response deleteHardProduct(@PathParam("id") long id, @Context UriInfo uriInfo) {
-        Product product = hardProductRepository.deleteHardProduct(id);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(product.getId().toString())
-                .build();
-        return Response.created(uri).build();
+        hardProductRepository.delete(hardProductRepository.findById(id));
+        URI uri = uriInfo.getAbsolutePathBuilder().path(Long.valueOf(id).toString()).build();
+        return Response.accepted(uri).location(uri).build();
     }
-
 
 }

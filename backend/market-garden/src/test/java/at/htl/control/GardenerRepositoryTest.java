@@ -33,7 +33,7 @@ class GardenerRepositoryTest {
     @Transactional
     void createAGardner() {
         Gardener gardener = new Gardener("Max2");
-        gardenerRepository.save(gardener);
+        gardenerRepository.persist(gardener);
         Table table = new Table(dataSource, "Gardener");
 
 
@@ -44,7 +44,7 @@ class GardenerRepositoryTest {
     @Test
     void getAGardener() {
         createAGardner();
-        Gardener gardener = gardenerRepository.getById(1);
+        Gardener gardener = gardenerRepository.findById(1L);
         assertThat(new Table(dataSource, "Gardener")).row(0).column("name")
                 .value()
                 .isEqualTo(gardener.getName());

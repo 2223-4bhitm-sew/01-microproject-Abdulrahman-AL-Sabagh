@@ -25,7 +25,7 @@ class SoftProductRepositoryTest {
     @Test
     void createASoftProduct() {
 
-        softProductRepository.save(new SoftProduct("chinese design", 2000));
+        softProductRepository.persist(new SoftProduct("chinese design", 2000));
         Table table = new Table(dataSource, "SoftProduct");
         assertThat(table).row(0)
                 .column("name").value().isEqualTo("chinese design")
@@ -35,7 +35,7 @@ class SoftProductRepositoryTest {
     @Test
     void getASoftProduct() {
         createASoftProduct();
-        SoftProduct softProduct = softProductRepository.findById(1);
+        SoftProduct softProduct = softProductRepository.findById(1L);
         Table table = new Table(dataSource, "SoftProduct");
         output(table).toConsole();
         assertThat(table)

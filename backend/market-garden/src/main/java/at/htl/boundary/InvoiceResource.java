@@ -1,10 +1,10 @@
 package at.htl.boundary;
 
 import at.htl.control.InvoiceRepository;
-import org.jboss.logging.Logger;
+import at.htl.entities.Invoice;
 
 import javax.inject.Inject;
-
+import javax.persistence.PostLoad;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -12,78 +12,53 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+import java.security.DrbgParameters;
 import java.util.List;
 
-import at.htl.entities.Invoice;
-
-
 @Path("/invoice")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class InvoiceResource {
 
     @Inject
     InvoiceRepository invoiceRepository;
 
-    @Inject
-    Logger logger;
-
-    @GET
-    public List<Invoice> getAll() {
-        return null;
+    @POST
+    @Transactional
+    public Response createInvoice(Invoice invoice, @Context UriInfo uriInfo) {
+        invoiceRepository.persist(invoice);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(invoice.getId().toString()).build();
+        return Response.created(uri).location(uri).build();
     }
 
     @GET
     @Path("{id}")
-    public Invoice getOneInvoice(@PathParam("id") long id) {
-        return invoiceRepository.getInvoice(id);
+    public Invoice getInvoice(@PathParam("id") long id) {
+        return invoiceRepository.findById(id);
+
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Invoice> getAllInvoices() {
-        return invoiceRepository.getAllCustomers();
-    }
-
-    @POST
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createInvoice(Invoice invoice, @Context UriInfo uriInfo) {
-        logger.infof(invoice.toString());
-        Invoice createdInvoice = invoiceRepository.save(invoice);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(createdInvoice.getId().toString())
-                .build();
-
-
-        return Response.created(uri).build();
+    public List<Invoice> getAll() {
+        return invoiceRepository.listAll();
     }
 
     @PUT
     @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateInvoice(Invoice invoice, @Context UriInfo uriInfo) {
-        Invoice updatedInvoice = invoiceRepository.updateInvoice(invoice);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(updatedInvoice.getId().toString())
-                .build();
-        return Response.created(uri).build();
+    @Path("{id}")
+    public Response updateInvoice(Invoice invoice, @PathParam("id") long id, @Context UriInfo uriInfo) {
+        invoiceRepository.update("totalCost=?1 where id=?2", invoice.getTotalCost(), invoice.getId());
+        URI uri = uriInfo.getAbsolutePathBuilder().path(Long.valueOf(id).toString()).build();
+        return Response.accepted(uri).location(uri).build();
     }
-
 
     @DELETE
     @Transactional
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteInvoice(@PathParam("id") long id, @Context UriInfo uriInfo) {
-        Invoice deletedInvoice = invoiceRepository.deleteInvoice(id);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(deletedInvoice.getId().toString())
-                .build();
-        return Response.created(null).build();
+        invoiceRepository.delete(invoiceRepository.findById(id));
+        URI uri = uriInfo.getAbsolutePathBuilder().path(Long.valueOf(id).toString()).build();
+        return Response.accepted(uri).location(uri).build();
     }
 
 }

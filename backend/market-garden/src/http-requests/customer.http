@@ -18,12 +18,12 @@ GET http://localhost:8080/api/customer/1
 GET http://localhost:8080/api/customer
 
 ###
-PATCH http://localhost:8080/api/customer
+PUT http://localhost:8080/api/customer/1
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "MAX"
+
+  "name": "SUSIE "
 }
 
 ###

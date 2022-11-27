@@ -15,11 +15,11 @@ GET http://localhost:8080/api/gardener
 ###
 GET http://localhost:8080/api/gardener/1
 ###
-PUT http://localhost:8080/api/gardener
+PUT http://localhost:8080/api/gardener/1
 Content-Type: application/json
 
 {
-  "id": 1,
+
   "name": "MAX"
 }
 

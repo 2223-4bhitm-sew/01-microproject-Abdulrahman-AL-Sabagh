@@ -24,7 +24,7 @@ class InvoiceRepositoryTest {
     @Test
     @Transactional
     void createAnInvoice() {
-        invoiceRepository.save(new Invoice(100, null));
+        invoiceRepository.persist(new Invoice(100, null));
         Table table = new Table(dataSource, "Invoice");
         output(table).toConsole();
         assertThat(table).row(0).column("totalcost").value().isEqualTo(100);
@@ -33,7 +33,7 @@ class InvoiceRepositoryTest {
     @Test
     void getAnInvoice() {
         createAnInvoice();
-        Invoice invoice = invoiceRepository.getInvoice(1);
+        Invoice invoice = invoiceRepository.findById(1L);
         Table table = new Table(dataSource, "Invoice");
         assertThat(table).row(0).column("totalcost").value().isEqualTo(invoice.getTotalCost());
     }

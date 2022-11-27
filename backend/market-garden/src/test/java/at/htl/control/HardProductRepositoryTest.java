@@ -24,7 +24,7 @@ class HardProductRepositoryTest {
     @Test
     @Transactional
     void createAHardProduct() {
-        hardProductRepository.save(new HardProduct("shovel", 30));
+        hardProductRepository.persist(new HardProduct("shovel", 30));
         Table table = new Table(dataSource, "HardProduct");
         output(table).toConsole();
         assertThat(table).row(0)
@@ -35,7 +35,7 @@ class HardProductRepositoryTest {
     @Test
     void getAHardProduct() {
         createAHardProduct();
-        HardProduct hardProduct = hardProductRepository.findOneById(1);
+        HardProduct hardProduct = hardProductRepository.findById(1L);
         Table table = new Table(dataSource, "HardProduct");
         assertThat(table).row(0)
                 .column("name").value().isEqualTo(hardProduct.getName())

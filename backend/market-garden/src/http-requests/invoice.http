@@ -22,13 +22,13 @@ GET http://localhost:8080/api/invoice
 
 
 ###
-PUT http://localhost:8080/api/invoice
+PUT http://localhost:8080/api/invoice/1
 Content-Type: application/json
 
 {
-  "id": 1,
-  "totalCost": 33,
-  "customer": null
+
+  "totalCost": 33
+
 }
 
 ###

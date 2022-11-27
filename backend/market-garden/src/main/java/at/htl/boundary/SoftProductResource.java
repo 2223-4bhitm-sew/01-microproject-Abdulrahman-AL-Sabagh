@@ -1,14 +1,12 @@
 package at.htl.boundary;
 
 import at.htl.control.SoftProductRepository;
-import at.htl.entities.Product;
 import at.htl.entities.SoftProduct;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -16,63 +14,47 @@ import java.util.List;
 
 @Path("/soft-product")
 public class SoftProductResource {
+
+
     @Inject
     SoftProductRepository softProductRepository;
 
+    @POST
+    @Transactional
+    public Response createSoftProduct(SoftProduct softProduct, @Context UriInfo uriInfo) {
+        softProductRepository.persist(softProduct);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(softProduct.getId().toString()).build();
+        return Response.created(uri).location(uri).build();
+    }
+
+    @GET
+    public List<SoftProduct> getAll() {
+        return softProductRepository.listAll();
+    }
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public SoftProduct getProduct(@PathParam("id") long id) {
+    public SoftProduct getSoftProduct(@PathParam("id") long id) {
         return softProductRepository.findById(id);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<SoftProduct> getAll() {
-        return softProductRepository.findAll();
-    }
-
-    @POST
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response saveProduct(@Context UriInfo uriInfo, SoftProduct softProduct) {
-        Product product = softProductRepository.save(softProduct);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(product.getId().toString())
-                .build();
-        return Response.created(uri).build();
-    }
-
     @PUT
+    @Path("{id}")
     @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(@Context UriInfo uriInfo, SoftProduct softProduct) {
-        Product product = softProductRepository.updateSoftProduct(softProduct);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(product.getId().toString())
-                .build();
-        return Response.created(uri).build();
+    public Response updateSoftProduct(SoftProduct softProduct, @PathParam("id") long id, @Context UriInfo uriInfo) {
+        softProductRepository.update("name=?1 price=?2 where id=?3", softProduct.getName(), softProduct.getPrice(), id);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(Long.valueOf(id).toString()).build();
+        return Response.accepted(uri).location(uri).build();
     }
-
-
 
 
     @DELETE
-    @Transactional
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProduct(@Context UriInfo uriInfo,@PathParam("id") long id ) {
-        Product product = softProductRepository.deleteSoftProduct(id);
-        URI uri = uriInfo
-                .getAbsolutePathBuilder()
-                .path(product.getId().toString())
-                .build();
-        return Response.created(uri).build();
+    @Transactional
+    public Response deleteSoftProduct(@PathParam("id") long id, @Context UriInfo uriInfo) {
+        softProductRepository.delete(softProductRepository.findById(id));
+        URI uri = uriInfo.getAbsolutePathBuilder().path(Long.valueOf(id).toString()).build();
+        return Response.accepted(uri).location(uri).build();
     }
 
 }

@@ -1,41 +1,12 @@
 package at.htl.control;
 
-import at.htl.boundary.GardenerResource;
 import at.htl.entities.Gardener;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import java.util.List;
 
 @ApplicationScoped
-public class GardenerRepository {
-    @Inject
-    EntityManager entityManager;
+public class GardenerRepository implements PanacheRepository<Gardener> {
 
-    public Gardener getById(long id) {
-        return entityManager.find(Gardener.class, id);
-    }
-
-    public List<Gardener> getAllGardeners() {
-        return entityManager.createNamedQuery("Gardener.findAll").getResultList();
-    }
-
-    public Gardener save(Gardener gardener) {
-        if (entityManager.contains(gardener)) {
-            return null;
-        }
-        return entityManager.merge(gardener);
-    }
-
-    public Gardener updateGardener(Gardener gardener) {
-        return entityManager.merge(gardener);
-    }
-
-    public Gardener deleteGardener(long id) {
-        Gardener foundGardener = entityManager.find(Gardener.class, id);
-        entityManager.remove(foundGardener);
-        return foundGardener;
-    }
 }
 
