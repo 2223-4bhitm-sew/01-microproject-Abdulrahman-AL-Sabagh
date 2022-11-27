@@ -15,9 +15,8 @@ public class Gardener {
     private Collection<SoftProduct> products = new ArrayList<>();
 
 
-    public Gardener(String name, Collection<SoftProduct> products) {
+    public Gardener(String name) {
         this.name = name;
-        this.products = products;
     }
 
     public Gardener() {
@@ -47,4 +46,14 @@ public class Gardener {
     public void setProducts(Collection<SoftProduct> products) {
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return "Gardener{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }
+
